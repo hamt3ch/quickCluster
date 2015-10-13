@@ -17,9 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Override point for customization after application launch.
     
-    RestAPIManager.sharedInstance.getRandomUser { json -> Void in
-      println(json)
+    //make ApiCall
+//    RestAPIManager.sharedInstance.getRandomUser { json -> Void in
+//      print(json)
+//    }
+    
+    RestAPIManager.sharedInstance.pushToServer { json -> Void in
+        print(json)
     }
+    
+    
     return true
   }
 

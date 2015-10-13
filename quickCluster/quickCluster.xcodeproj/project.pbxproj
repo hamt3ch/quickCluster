@@ -189,6 +189,8 @@
 		719F76AC1B5B900E0086E742 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
+				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = hamtech;
 				TargetAttributes = {

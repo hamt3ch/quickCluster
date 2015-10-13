@@ -1,3 +1,4 @@
+
 //
 //  RestAPIManager.swift
 //  
@@ -17,7 +18,16 @@ class RestAPIManager:NSObject {
   let baseURL = "https://api-us.clusterpoint.com/100909/quickCluster.json"
   
   let searchURL = "https://api-us.clusterpoint.com/100909/quickCluster/_search.json"
+    
+   let insertURL = "https://api-us.clusterpoint.com/100909/quickCluster.json"
   
+    
+   func pushToServer(onCompletion: (JSON) -> Void){
+    makeHTTPRequest(insertURL, onCompletion: {json, err -> Void in
+        onCompletion(json)
+    })
+  }
+    
   func getRandomUser(onCompletion: (JSON) -> Void){
     makeHTTPRequest(searchURL, onCompletion: {json, err -> Void in
       onCompletion(json)
@@ -37,29 +47,33 @@ class RestAPIManager:NSObject {
       request.addValue("application/json", forHTTPHeaderField: "Accept")
       request.addValue(fullAuth, forHTTPHeaderField: "Authorization")
       request.HTTPMethod = "POST"
-      
+        
+      let id = ["id":"name"]
+        
       let body = [
-        "query": "*"
-//        "id": "asdffffff",
-//        "name": "bob",
-//        "phoneNumber": "123456789"
+        "id" : "32424",
+//        "id": "78686913",
+        "name": "Hugh Miles"
+//        "phoneNumber": "9546685225"
       ]
       
       var err: NSError?
-      request.HTTPBody = NSJSONSerialization.dataWithJSONObject(body, options: nil, error: &err)
+      do {
+        request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(body, options: [])
+      } catch var error as NSError {
+        err = error
+        request.HTTPBody = nil
+      }
       
       let session = NSURLSession.sharedSession();
       let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error in
         
-        let stuff: NSString = NSString(data: data, encoding: NSUTF8StringEncoding)!
+        let stuff: NSString = NSString(data: data!, encoding: NSUTF8StringEncoding)!
         let json:JSON = JSON(stuff)
-        println(json)
+        print(json)
       })
       
       task.resume()
     }
-    
-    
-    
   }
 }
